@@ -88,14 +88,6 @@ resource "aws_security_group" "instance_sg" {
   }
 
   ingress {
-    from_port   = 9099
-    to_port     = 9099
-    protocol    = "tcp"
-    self        = true
-    description = "Canal/Flannel health check"
-  }
-
-  ingress {
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
@@ -109,6 +101,22 @@ resource "aws_security_group" "instance_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     description = "RKE2 Supervisor API"
+  }
+
+  ingress {
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    self        = true
+    description = "kubelet"
+  }
+
+  ingress {
+    from_port   = 30000
+    to_port     = 32767
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "NodePort port range"
   }
 
   egress {

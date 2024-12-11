@@ -18,3 +18,11 @@ variable "instance_type" {
 variable "token" {
   default = "my-shared-secret"
 }
+
+variable "zone_id" {
+  description = "Public Hosted Zone ID"
+}
+
+variable "domain_name" {
+  description = "Domain name for Rancher Server"
+}

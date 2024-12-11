@@ -220,6 +220,14 @@ resource "aws_lb_target_group_attachment" "rancher_443_attach" {
   port             = 443
 }
 
+resource "aws_route53_record" "rancher" {
+  zone_id = var.zone_id
+  name = var.domain_name
+  type = "CNAME"
+  ttl = "30"
+  records = [ "${aws_lb.nlb.dns_name}" ]
+}
+
 output "isntance_public_ips" {
   value = aws_instance.control_plane[*].public_ip
 }
@@ -230,4 +238,8 @@ output "initial_server_public_ip" {
 
 output "nlb_dns_name" {
   value = aws_lb.nlb.dns_name
+}
+
+output "rancher_domain" {
+  value = aws_route53_record.rancher.fqdn
 }
